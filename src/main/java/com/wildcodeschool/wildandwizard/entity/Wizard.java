@@ -1,10 +1,20 @@
 package com.wildcodeschool.wildandwizard.entity;
 
+import javax.management.MXBean;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.Join.Table;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Wizard {
@@ -19,6 +29,13 @@ public class Wizard {
     private String biography;
     private boolean muggle;
 
+    //-------
+    @ManyToMany
+    @JoinTable(name="wizard_course", joinColumn = @JoinColumn(name="wizard_id"),
+    inversJoinColumns = @JoinColumn(name = "course_id"))   
+    
+    private List<Course> courses; 
+    
     public Wizard() {
     }
 
@@ -76,5 +93,20 @@ public class Wizard {
 
     public void setMuggle(boolean muggle) {
         this.muggle = muggle;
+
     }
+    
+    //--
+    public List<Course> getCourses(){
+        return courses;
+    
+    }
+
+    public void setCourses(List<Course> courses){
+        this.courses = courses;
+           
+
+    }
+     
+    
 }
